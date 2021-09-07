@@ -5,10 +5,13 @@ import "./LocationList.css"
 
 
 export const LocationList = () => {
-    const [ locations, updateLocations ] = useState([])
+    const [locations, updateLocations] = useState([])
 
     useEffect(() => {
         LocationRepository.getAll()
+            .then((data) => {
+                updateLocations(data)
+            })
     }, [])
 
     return (
