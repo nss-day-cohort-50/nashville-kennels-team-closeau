@@ -28,6 +28,19 @@ export default ({ employee }) => {
         }
     }, [resource])
 
+
+
+    const fireEmployee = (employeeId) => {
+        EmployeeRepository.delete(employeeId)
+        .then(() => {
+           EmployeeRepository.get(employeeId)
+        })
+    }
+
+
+   
+
+
     return (
         <article className={classes}>
             <section className="card-body">
@@ -60,7 +73,7 @@ export default ({ employee }) => {
                 }
 
                 {
-                    <button className="btn--fireEmployee" onClick={() => {}}>Fire</button>
+                    <button className="btn--fireEmployee" onClick={() => {fireEmployee(employeeId)}}>Fire</button>
                 }
 
             </section>
