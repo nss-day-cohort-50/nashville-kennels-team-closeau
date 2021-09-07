@@ -1,11 +1,24 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import EmployeeRepository from "../../repositories/EmployeeRepository";
+import LocationRepository from "../../repositories/LocationRepository";
 import "./EmployeeForm.css"
 
 
 export default (props) => {
     const [employee, updateEmployee] = useState()
     const [locations, defineLocations] = useState([])
+
+    useEffect(
+        () => {
+            LocationRepository.getAll()
+            .then(
+                (locationsData) => {
+                    defineLocations(locationsData)
+                }
+            )
+        }, 
+        []
+    )
 
     const constructNewEmployee = () => {
         if (employee.locationId === 0) {
@@ -54,9 +67,9 @@ export default (props) => {
                         className="form-control"
                     >
                         <option value="0">Select a location</option>
-                        {locations.map(e => (
-                            <option key={e.id} value={e.id}>
-                                {e.name}
+                        {locations.map(location => (
+                            <option key={location.id} value={location.id}>
+                                {location.name}
                             </option>
                         ))}
                     </select>
