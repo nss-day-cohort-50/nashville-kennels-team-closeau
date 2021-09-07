@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import EmployeeRepository from "../../repositories/EmployeeRepository";
 import LocationRepository from "../../repositories/LocationRepository";
 import "./EmployeeForm.css"
 
 
 export default (props) => {
-    const [employee, updateEmployee] = useState()
+    const [employee, updateEmployee] = useState({
+        name: "",
+        locationId: 0
+    })
     const [locations, defineLocations] = useState([])
+    const history = useHistory()
 
     useEffect(
         () => {
@@ -31,10 +36,10 @@ export default (props) => {
             .then(employee => {
                 EmployeeRepository.assignEmployee({
                     employeeId: employee.id,
-                    locationId: employee.location
+                    locationId: parseInt(employee.locationId)
                 })
             })
-            .then(() => props.history.push("/employees"))
+            .then(() => history.push("/employees"))
         }
     }
 
@@ -57,6 +62,7 @@ export default (props) => {
                         autoFocus
                         className="form-control"
                         placeholder="Employee name"
+                        id="name"
                     />
                 </div>
                 <div className="form-group">
@@ -65,6 +71,7 @@ export default (props) => {
                         defaultValue=""
                         name="location"
                         className="form-control"
+                        id="locationId"
                     >
                         <option value="0">Select a location</option>
                         {locations.map(location => (
