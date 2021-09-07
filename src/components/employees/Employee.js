@@ -25,17 +25,28 @@ export default ({ employee }) => {
     useEffect(() => {
         if (resource?.employeeLocations?.length > 0) {
             markLocation(resource.employeeLocations[0])
-        }
+        } 
     }, [resource])
 
 
 
-    const fireEmployee = (employeeId) => {
-        EmployeeRepository.delete(employeeId)
+    const fireEmployee = (id) => {
+        EmployeeRepository.delete(id)
         .then(() => {
-           EmployeeRepository.get(employeeId)
+           EmployeeRepository.getAll()
         })
     }
+
+
+
+    // const deleteTicket = (id) => {
+    //     fetch(`http://localhost:8088/serviceTickets/${id}`, {
+    //         method: "DELETE"
+    //     })
+    //     .then(() => {
+    //         window.location.reload(false);
+    //     })
+    // }
 
 
    
@@ -73,7 +84,7 @@ export default ({ employee }) => {
                 }
 
                 {
-                    <button className="btn--fireEmployee" onClick={() => {fireEmployee(employeeId)}}>Fire</button>
+                    <button className="btn--fireEmployee" onClick={() => {fireEmployee(resource.id)}}>Fire</button>
                 }
 
             </section>
