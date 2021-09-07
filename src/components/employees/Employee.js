@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useHistory } from "react-router-dom"
 import EmployeeRepository from "../../repositories/EmployeeRepository";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
@@ -7,13 +7,16 @@ import person from "./person.png"
 import "./Employee.css"
 
 
-export default ({ employee }) => {
+export default ({ employee, updateEmployees }) => { // object deconstruction, employee is a child of employee list, so I can pass props down from employee list to employee
     const [animalCount, setCount] = useState(0)
     const [location, markLocation] = useState({ name: "" })
     const [classes, defineClasses] = useState("card employee")
     const { employeeId } = useParams()
     const { getCurrentUser } = useSimpleAuth()
     const { resolveResource, resource } = useResourceResolver()
+
+
+
 
     useEffect(() => {
         if (employeeId) {
@@ -25,8 +28,19 @@ export default ({ employee }) => {
     useEffect(() => {
         if (resource?.employeeLocations?.length > 0) {
             markLocation(resource.employeeLocations[0])
-        }
+        } 
     }, [resource])
+
+
+
+    const fireEmployee = (id) => {
+        EmployeeRepository.delete(id)
+        .then(() => {
+           EmployeeRepository.getAll()
+           .then(updateEmployees)
+        })
+    }
+
 
     return (
         <article className={classes}>
@@ -60,7 +74,7 @@ export default ({ employee }) => {
                 }
 
                 {
-                    <button className="btn--fireEmployee" onClick={() => {}}>Fire</button>
+                    <button className="btn--fireEmployee" onClick={() => {fireEmployee(resource.id)}}>Fire</button>
                 }
 
             </section>
