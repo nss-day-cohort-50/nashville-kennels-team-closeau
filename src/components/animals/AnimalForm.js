@@ -37,7 +37,7 @@ export default (props) => {
                 name: animalName,
                 breed: breed,
                 employeeId: eId,
-                locationId: parseInt(emp.locationId)
+                locationId: parseInt(emp.employeeLocations[0].locationId)
             }
 
             AnimalRepository.addAnimal(animal)
