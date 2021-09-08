@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link, useParams, useHistory } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import EmployeeRepository from "../../repositories/EmployeeRepository";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
