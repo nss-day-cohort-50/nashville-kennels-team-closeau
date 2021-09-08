@@ -96,6 +96,7 @@ export default (props) => {
                         name="location"
                         className="form-control"
                         id="locationId"
+                        required
                     >
                         <option value="0">Select a location</option>
                         {locations.map(location => (
