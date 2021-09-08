@@ -6,6 +6,7 @@ import OwnerRepository from "../../repositories/OwnerRepository";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import "./AnimalCard.css";
+import { userInfo } from "os";
 
 export const Animal = ({
   animal,
@@ -99,11 +100,31 @@ export const Animal = ({
 
             <section>
               <h6>Caretaker(s)</h6>
-              <span className="small">Unknown</span>
+              <span className="small">
+                Caretakers:
+                {
+                  new Set(
+                    currentAnimal?.animalCaretakers?.map((name) => {
+                      let namez = name.user.name;
+                      return (namez += " ");
+                    })
+                  )
+                }
+              </span>
 
               <h6>Owners</h6>
 
-              <span className="small">Owned by {}</span>
+              <span className="small">
+                Owned by{" "}
+                {
+                  new Set(
+                    currentAnimal?.animalOwners?.map((name) => {
+                      let namez = name.user.name;
+                      return (namez += " ");
+                    })
+                  )
+                }
+              </span>
 
               {isEmployee && myOwners.length < 5 ? (
                 <select
