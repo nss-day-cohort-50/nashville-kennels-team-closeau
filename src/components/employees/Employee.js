@@ -7,13 +7,16 @@ import person from "./person.png"
 import "./Employee.css"
 
 
-export default ({ employee }) => {
+export default ({ employee, updateEmployees }) => { // object deconstruction, employee is a child of employee list, so I can pass props down from employee list to employee
     const [animalCount, setCount] = useState(0)
     const [location, markLocation] = useState({ name: "" })
     const [classes, defineClasses] = useState("card employee")
     const { employeeId } = useParams()
     const { getCurrentUser } = useSimpleAuth()
     const { resolveResource, resource } = useResourceResolver()
+
+
+
 
     useEffect(() => {
         if (employeeId) {
@@ -25,8 +28,18 @@ export default ({ employee }) => {
     useEffect(() => {
         if (resource?.employeeLocations?.length > 0) {
             markLocation(resource.employeeLocations[0])
-        }
+        } 
     }, [resource])
+
+
+
+    const fireEmployee = (id) => {
+        EmployeeRepository.delete(id)
+        .then(() => {
+           EmployeeRepository.getAll()
+           .then(updateEmployees)
+        })
+    }
 
     return (
         <article className={classes}>
@@ -48,19 +61,20 @@ export default ({ employee }) => {
                 </h5>
                 {
                     employeeId
-                        ? <>
+                        ? 
+                        <>
                             <section>
                                 Caring for 0 animals
                             </section>
                             <section>
-                                Working at unknown location
+                                Working at {resource.location} location
                             </section>
                         </>
                         : ""
                 }
 
                 {
-                    <button className="btn--fireEmployee" onClick={() => {}}>Fire</button>
+                    <button className="btn--fireEmployee" onClick={() => {fireEmployee(resource.id)}}>Fire</button>
                 }
 
             </section>
