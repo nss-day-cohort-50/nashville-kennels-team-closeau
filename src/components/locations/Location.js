@@ -9,19 +9,7 @@ import LocationRepository from "../../repositories/LocationRepository"
 
 
 
-export default ({ location }) => {
-
-    const [locations, setLocations] = useState([])
-
-    useEffect(
-        () => {
-            LocationRepository.getAll()
-                .then((data) => {
-                    setLocations(data)
-                })
-        }, []
-    )
-
+export default ({ location, }) => {
 
     return (
         <article className="card location" style={{ width: `18rem` }}>
@@ -46,5 +34,5 @@ export default ({ location }) => {
         </article>
     )
 }
-                
+
 
