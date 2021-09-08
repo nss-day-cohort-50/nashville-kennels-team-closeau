@@ -14,7 +14,7 @@ import LocationRepository from "../../repositories/LocationRepository"
 
 export default ({ location }) => {
 
-    const [totalEmployeesMessage, updateMessage] = useState("")
+    const [totalEmployeesMessage, updateEmployeeMessage] = useState("")
     const [totalAnimalsMessage, updateAnimalMessage] = useState("")
     const [locations, setLocations] = useState([])
     const [emps, setEmployees] = useState([])
@@ -33,10 +33,10 @@ export default ({ location }) => {
         () => { 
             locations.map((l) => {
                 if ( l?.employeeLocations?.length === 1) {
-                    return updateMessage("You have 1 employee at this location")
+                    return updateEmployeeMessage("1")
                 }
                 if (l?.employeeLocations.length > 1) {
-                    return updateMessage(`You have ${l?.employeeLocations.length} employees at this location`) // function that updates the variable of totalCustomerMessage
+                    return updateEmployeeMessage(`${l?.employeeLocations.length}`) // function that updates the variable of totalCustomerMessage
                 }
             }
             )
@@ -47,17 +47,19 @@ export default ({ location }) => {
 
     //l?.animals.employeeLocations?.locationId === location.id
 
-    // useEffect(
-    //     () => {
-    //         if (animals.length === 1) {
-    //             updateAnimalMessage("You have 1 animal at this location")
-    //         }
-    //         else {
-    //             updateAnimalMessage(`You have ${animals.length} animals at this location`) // function that updates the variable of totalCustomerMessage
-    //         }
-    //     },
-    //     [animals] // when the state of this array changes, you invoke updateMessage
-    // )
+    useEffect(
+        () => { 
+            locations.map((l) => {
+                if ( l?.animals?.length === 1) {
+                    return updateAnimalMessage("1")
+                }
+                if (l?.animals.length > 1) {
+                    return updateAnimalMessage(`${l?.animals.length}`) // function that updates the variable of totalCustomerMessage
+                }
+            }
+            )
+        }, [locations] // when the state of this array changes, you invoke updateMessage
+    )
 
 
     return (
