@@ -12,47 +12,52 @@ import LocationRepository from "../../repositories/LocationRepository"
 
 
 
-export default ({location }) => {
+export default ({ location }) => {
 
-const [totalEmployeesMessage, updateMessage] = useState("")
-const [totalAnimalsMessage, updateAnimalMessage] = useState("")
-const [locations, setLocations] = useState([])
-const [emps, setEmployees] = useState([])
+    const [totalEmployeesMessage, updateMessage] = useState("")
+    const [totalAnimalsMessage, updateAnimalMessage] = useState("")
+    const [locations, setLocations] = useState([])
+    const [emps, setEmployees] = useState([])
 
     useEffect(
         () => {
             LocationRepository.getAll()
-            .then((data) => {
-               setLocations(data) 
-            })
+                .then((data) => {
+                    setLocations(data)
+                })
         }, []
     )
- 
-
-useEffect(
-    ()=> {
-       locations.filter(locations.animal.locationId.length === 1){
-            updateMessage("You have 1 employee at this location")
-        }
-        else{
-            updateMessage(`You have ${emps.length} employees at this location`) // function that updates the variable of totalCustomerMessage
-        }
-    },
-    [setEmployees] // when the state of this array changes, you invoke updateMessage
-)
 
 
-useEffect(
-    ()=> {
-        if (animals.length === 1){
-            updateAnimalMessage("You have 1 animal at this location")
-        }
-        else{
-            updateAnimalMessage(`You have ${animals.length} animals at this location`) // function that updates the variable of totalCustomerMessage
-        }
-    },
-    [animals] // when the state of this array changes, you invoke updateMessage
-)
+    useEffect(
+        () => { 
+            locations.map((l) => {
+                if ( l?.employeeLocations?.length === 1) {
+                    return updateMessage("You have 1 employee at this location")
+                }
+                if (l?.employeeLocations.length > 1) {
+                    return updateMessage(`You have ${l?.employeeLocations.length} employees at this location`) // function that updates the variable of totalCustomerMessage
+                }
+            }
+            )
+        }, [locations] // when the state of this array changes, you invoke updateMessage
+    )
+
+    // l.employeeLocations.locationId === location.id &&
+
+    //l?.animals.employeeLocations?.locationId === location.id
+
+    // useEffect(
+    //     () => {
+    //         if (animals.length === 1) {
+    //             updateAnimalMessage("You have 1 animal at this location")
+    //         }
+    //         else {
+    //             updateAnimalMessage(`You have ${animals.length} animals at this location`) // function that updates the variable of totalCustomerMessage
+    //         }
+    //     },
+    //     [animals] // when the state of this array changes, you invoke updateMessage
+    // )
 
 
     return (
@@ -78,3 +83,5 @@ useEffect(
         </article>
     )
 }
+                
+
