@@ -100,7 +100,17 @@ export const Animal = ({
 
             <section>
               <h6>Caretaker(s)</h6>
-              <span className="small">Unknown</span>
+              <span className="small">
+                Caretakers:
+                {
+                  new Set(
+                    currentAnimal?.animalCaretakers?.map((name) => {
+                      let namez = name.user.name;
+                      return (namez += " ");
+                    })
+                  )
+                }
+              </span>
 
               <h6>Owners</h6>
 
