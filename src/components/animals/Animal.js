@@ -6,11 +6,11 @@ import OwnerRepository from "../../repositories/OwnerRepository";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import "./AnimalCard.css";
-import { userInfo } from "os";
 
 export const Animal = ({
   animal,
   syncAnimals,
+  syncAnimalOwners,
   showTreatmentHistory,
   owners,
 }) => {
@@ -118,7 +118,7 @@ export const Animal = ({
                 Owned by{" "}
                 {
                   new Set(
-                    currentAnimal?.animalOwners?.map((name) => {
+                    myOwners.map((name) => {
                       let namez = name.user.name;
                       return (namez += " ");
                     })
@@ -131,12 +131,14 @@ export const Animal = ({
                   defaultValue=""
                   name="owner"
                   className="form-control small"
-                  onChange={(evt) => {
+                  onChange={(evt) =>
                     AnimalOwnerRepository.assignOwner(
                       currentAnimal.id,
                       parseInt(evt.target.value)
-                    );
-                  }}
+                    )
+                      .then(AnimalOwnerRepository.getAll)
+                      .then(getPeople)
+                  }
                 >
                   <option value="">
                     Select {myOwners.length === 1 ? "another" : "an"} owner
@@ -169,13 +171,19 @@ export const Animal = ({
             {isEmployee ? (
               <button
                 className="btn btn-warning mt-3 form-control small"
-                onClick={
-                  () =>
-                    AnimalOwnerRepository.removeOwnersAndCaretakers(
-                      currentAnimal.id
-                    )
-                      .then(() => {}) // Remove animal
-                      .then(() => {}) // Get all animals
+                onClick={() =>
+                  AnimalOwnerRepository.removeOwnersAndCaretakers(
+                    currentAnimal.id
+                  )
+                    .then(() => {
+                      AnimalRepository.delete(currentAnimal.id);
+                    }) // Remove animal
+                    .then(() => {
+                      AnimalRepository.getAll();
+                    }) // Get all animals
+                    .then(() => {
+                      history.push("/animals/");
+                    })
                 }
               >
                 Discharge
