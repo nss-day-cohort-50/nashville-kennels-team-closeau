@@ -16,7 +16,9 @@ export const LocationList = () => {
 
     return (
         <div className="locations">
-            {locations.map(l => <Location key={l.id} location={l} locations={setLocations} />)}
+            {locations.map(l => <Location key={l.id} location={l} />)} {/* mapped over the array of locations in order to get the route for individual locations. Made the individual locations a prop to be used in Location.js  */}
         </div>
     )
 }
+
+

@@ -9,15 +9,9 @@ import LocationRepository from "../../repositories/LocationRepository"
 
 
 
-
-
-
 export default ({ location }) => {
 
-    const [totalEmployeesMessage, updateEmployeeMessage] = useState("")
-    const [totalAnimalsMessage, updateAnimalMessage] = useState("")
     const [locations, setLocations] = useState([])
-    const [emps, setEmployees] = useState([])
 
     useEffect(
         () => {
@@ -26,39 +20,6 @@ export default ({ location }) => {
                     setLocations(data)
                 })
         }, []
-    )
-
-
-    useEffect(
-        () => { 
-            locations.map((l) => {
-                if ( l?.employeeLocations?.length === 1) {
-                    return updateEmployeeMessage("1")
-                }
-                if (l?.employeeLocations.length > 1) {
-                    return updateEmployeeMessage(`${l?.employeeLocations.length}`) // function that updates the variable of totalCustomerMessage
-                }
-            }
-            )
-        }, [locations] // when the state of this array changes, you invoke updateMessage
-    )
-
-    // l.employeeLocations.locationId === location.id &&
-
-    //l?.animals.employeeLocations?.locationId === location.id
-
-    useEffect(
-        () => { 
-            locations.map((l) => {
-                if ( l?.animals?.length === 1) {
-                    return updateAnimalMessage("1")
-                }
-                if (l?.animals.length > 1) {
-                    return updateAnimalMessage(`${l?.animals.length}`) // function that updates the variable of totalCustomerMessage
-                }
-            }
-            )
-        }, [locations] // when the state of this array changes, you invoke updateMessage
     )
 
 
@@ -77,10 +38,10 @@ export default ({ location }) => {
                 </h5>
             </section>
             <section>
-                Total animals {totalAnimalsMessage}
+                Total animals: {location.animals.length}
             </section>
             <section>
-                Total locations {totalEmployeesMessage}
+                Total employees: {location.employeeLocations.length}
             </section>
         </article>
     )
