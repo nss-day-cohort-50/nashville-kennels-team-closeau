@@ -41,7 +41,6 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
         })
     }
 
-
     return (
         <article className={classes}>
             <section className="card-body">
@@ -62,12 +61,13 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
                 </h5>
                 {
                     employeeId
-                        ? <>
+                        ? 
+                        <>
                             <section>
                                 Caring for 0 animals
                             </section>
                             <section>
-                                Working at unknown location
+                                Working at {resource.location} location
                             </section>
                         </>
                         : ""
