@@ -6,6 +6,7 @@ import OwnerRepository from "../../repositories/OwnerRepository";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import "./AnimalCard.css";
+import { userInfo } from "os";
 
 export const Animal = ({
   animal,
