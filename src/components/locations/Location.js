@@ -3,26 +3,55 @@ import { Link } from "react-router-dom"
 import locationImage from "./location.png"
 import "./Location.css"
 import { useState, useEffect } from "react"
+import EmployeeRepository from "../../repositories/EmployeeRepository"
+import AnimalRepository from "../../repositories/AnimalRepository"
+import LocationRepository from "../../repositories/LocationRepository"
 
 
 
 
 
 
-export default ({location, locations, }) => {
+export default ({location }) => {
 
-const [totalLocationsMessage, updateMessage] = useState("")
+const [totalEmployeesMessage, updateMessage] = useState("")
+const [totalAnimalsMessage, updateAnimalMessage] = useState("")
+const [locations, setLocations] = useState([])
+const [emps, setEmployees] = useState([])
+
+    useEffect(
+        () => {
+            LocationRepository.getAll()
+            .then((data) => {
+               setLocations(data) 
+            })
+        }, []
+    )
+ 
 
 useEffect(
     ()=> {
-        if (locations.length === 1){
-            updateMessage("You have 1 location")
+       locations.filter(locations.animal.locationId.length === 1){
+            updateMessage("You have 1 employee at this location")
         }
         else{
-            updateMessage(`You have ${locations.length} locations`) // function that updates the variable of totalCustomerMessage
+            updateMessage(`You have ${emps.length} employees at this location`) // function that updates the variable of totalCustomerMessage
         }
     },
-    [locations] // when the state of this array changes, you invoke updateMessage
+    [setEmployees] // when the state of this array changes, you invoke updateMessage
+)
+
+
+useEffect(
+    ()=> {
+        if (animals.length === 1){
+            updateAnimalMessage("You have 1 animal at this location")
+        }
+        else{
+            updateAnimalMessage(`You have ${animals.length} animals at this location`) // function that updates the variable of totalCustomerMessage
+        }
+    },
+    [animals] // when the state of this array changes, you invoke updateMessage
 )
 
 
@@ -41,10 +70,10 @@ useEffect(
                 </h5>
             </section>
             <section>
-                Total animals
+                Total animals {totalAnimalsMessage}
             </section>
             <section>
-                Total locations {totalLocationsMessage}
+                Total locations {totalEmployeesMessage}
             </section>
         </article>
     )
