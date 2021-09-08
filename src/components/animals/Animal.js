@@ -179,12 +179,8 @@ export const Animal = ({
                     .then(() => {
                       AnimalRepository.delete(currentAnimal.id);
                     }) // Remove animal
-                    .then(() => {
-                      AnimalRepository.getAll();
-                    }) // Get all animals
-                    .then(() => {
-                      history.push("/animals/");
-                    })
+                    .then(AnimalRepository.getAll) // Get all animals
+                    .then(syncAnimals)
                 }
               >
                 Discharge
