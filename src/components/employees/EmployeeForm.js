@@ -34,6 +34,8 @@ export default (props) => {
                 employee: true
             })
             .then(employee => {
+
+            debugger
                 EmployeeRepository.assignEmployee({
                     employeeId: employee.id,
                     locationId: parseInt(employee.locationId)
