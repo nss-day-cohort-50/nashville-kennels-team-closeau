@@ -11,7 +11,6 @@ import { userInfo } from "os";
 export const Animal = ({
   animal,
   syncAnimals,
-  syncAnimalOwners,
   showTreatmentHistory,
   owners,
 }) => {

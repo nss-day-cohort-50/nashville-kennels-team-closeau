@@ -23,9 +23,6 @@ export const AnimalListComponent = (props) => {
   const syncAnimals = () => {
     AnimalRepository.getAll().then((data) => petAnimals(data));
   };
-  const syncAnimalOwners = () => {
-    AnimalOwnerRepository.getAll().then((data) => setAnimalOwners(data));
-  };
 
   useEffect(() => {
     OwnerRepository.getAllCustomers().then(updateOwners);
@@ -81,7 +78,6 @@ export const AnimalListComponent = (props) => {
                 syncAnimals={syncAnimals}
                 setAnimalOwners={setAnimalOwners}
                 showTreatmentHistory={showTreatmentHistory}
-                syncAnimalOwners={syncAnimalOwners}
               />
             ))
           : animals.map((anml) => {
