@@ -118,7 +118,7 @@ export const Animal = ({
                 Owned by{" "}
                 {
                   new Set(
-                    currentAnimal?.animalOwners?.map((name) => {
+                    myOwners.map((name) => {
                       let namez = name.user.name;
                       return (namez += " ");
                     })
@@ -131,12 +131,14 @@ export const Animal = ({
                   defaultValue=""
                   name="owner"
                   className="form-control small"
-                  onChange={(evt) => {
+                  onChange={(evt) =>
                     AnimalOwnerRepository.assignOwner(
                       currentAnimal.id,
                       parseInt(evt.target.value)
-                    );
-                  }}
+                    )
+                      .then(AnimalOwnerRepository.getAll)
+                      .then(getPeople)
+                  }
                 >
                   <option value="">
                     Select {myOwners.length === 1 ? "another" : "an"} owner
@@ -174,8 +176,11 @@ export const Animal = ({
                     AnimalOwnerRepository.removeOwnersAndCaretakers(
                       currentAnimal.id
                     )
-                      .then(() => {}) // Remove animal
-                      .then(() => {}) // Get all animals
+                      .then(() => {
+                        AnimalRepository.delete(currentAnimal.id);
+                      }) // Remove animal
+                      .then(AnimalRepository.getAll) // Get all animals
+                      .then(syncAnimals) // re-render list
                 }
               >
                 Discharge
