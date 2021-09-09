@@ -75,7 +75,7 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
                             Caring for {employee?.animalCaretakers?.length} animals
                         </section>
                         <section>
-                            Working at unknown location
+                            Working at 
                         </section>
                     </>
                 }
