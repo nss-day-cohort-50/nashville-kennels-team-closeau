@@ -172,15 +172,16 @@ export const Animal = ({
             {isEmployee ? (
               <button
                 className="btn btn-warning mt-3 form-control small"
-                onClick={() =>
-                  AnimalOwnerRepository.removeOwnersAndCaretakers(
-                    currentAnimal.id
-                  )
-                    .then(() => {
-                      AnimalRepository.delete(currentAnimal.id);
-                    }) // Remove animal
-                    .then(AnimalRepository.getAll) // Get all animals
-                    .then(syncAnimals)
+                onClick={
+                  () =>
+                    AnimalOwnerRepository.removeOwnersAndCaretakers(
+                      currentAnimal.id
+                    )
+                      .then(() => {
+                        AnimalRepository.delete(currentAnimal.id);
+                      }) // Remove animal
+                      .then(AnimalRepository.getAll) // Get all animals
+                      .then(syncAnimals) // re-render list
                 }
               >
                 Discharge
