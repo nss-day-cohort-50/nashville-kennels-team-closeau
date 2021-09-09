@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Employee from "./Employee"
 import EmployeeRepository from "../../repositories/EmployeeRepository"
+import AnimalRepository from "../../repositories/AnimalRepository"
 import "./EmployeeList.css"
 
 
