@@ -1,5 +1,6 @@
 import Settings from "./Settings"
 import { fetchIt } from "./Fetch"
+import LocationRepository from "./LocationRepository"
 
 export default {
     async get(id) {
@@ -22,6 +23,20 @@ export default {
         return await fetchIt(`${Settings.remoteURL}/employeeLocations`, "POST", JSON.stringify(rel))
     },
     async getAll() {
+        const locations = await LocationRepository.getAll()
         return await fetchIt(`${Settings.remoteURL}/users?employee=true&_embed=employeeLocations&_embed=animalCaretakers`)
+        .then((usersArray)=> {
+            const monstrosity = usersArray.map((userObject) => {
+                userObject.employeeLocations = userObject.employeeLocations.map((location)=> {
+                    location.location = locations.find((place)=> {
+                        return place.id === location.locationId
+                    }) 
+                    return location 
+                })
+                return userObject
+            })
+            console.log(monstrosity)
+        })
+
     }
 }
