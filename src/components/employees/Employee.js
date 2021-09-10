@@ -16,6 +16,7 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
     const { getCurrentUser } = useSimpleAuth()
     const { resolveResource, resource } = useResourceResolver()
     const [locations, setLocations] = useState([])
+   
 
     useEffect(() => {
         LocationRepository.getAll()
@@ -84,15 +85,9 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
                                 Caring for {employee?.animalCaretakers?.length} animals
                             </section>
                             <section>
-                                Working at {locations.map(
-                                    (location) => {
-                                        if (location.id === location?.employeeLocations?.locationId) {
-                                            return location.name
-                                        } else {
-                                            return ""
-                                        }
-                                    }
-                                )}
+                                Working at {resource?.employeeLocations?.map((location) => {
+                                    return location.location.name
+                                })}
                         </section>
                         </>
                 }
@@ -106,3 +101,20 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
         </article>
     )
 }
+
+
+
+
+
+
+
+
+// {locations.map(
+//     (location) => {
+//         if (location.id === location?.employeeLocations?.locationId) {
+//             return location.name
+//         } else {
+//             return ""
+//         }
+//     }
+// )}
