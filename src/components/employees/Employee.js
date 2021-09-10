@@ -7,14 +7,15 @@ import person from "./person.png"
 import "./Employee.css"
 
 
+
 export default ({ employee, updateEmployees }) => { // object deconstruction, employee is a child of employee list, so I can pass props down from employee list to employee
     const [animalCount, setCount] = useState(0)
-    const [location, markLocation] = useState({ name: "" })
+    const [l, markLocation] = useState({ name: "" })
     const [classes, defineClasses] = useState("card employee")
     const { employeeId } = useParams()
     const { getCurrentUser } = useSimpleAuth()
     const { resolveResource, resource } = useResourceResolver()
-
+  
 
 
 
@@ -28,18 +29,19 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
     useEffect(() => {
         if (resource?.employeeLocations?.length > 0) {
             markLocation(resource.employeeLocations[0])
-        } 
+        }
     }, [resource])
 
 
 
     const fireEmployee = (id) => {
         EmployeeRepository.delete(id)
-        .then(() => {
-           EmployeeRepository.getAll()
-           .then(updateEmployees)
-        })
+            .then(() => {
+                EmployeeRepository.getAll()
+                    .then(updateEmployees)
+            })
     }
+
 
 
     return (
@@ -71,17 +73,19 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
                             </section>
                         </>
                         : <>
-                        <section>
-                            Caring for {employee?.animalCaretakers?.length} animals
+                            <section>
+                                Caring for {employee?.animalCaretakers?.length} animals
+                            </section>
+                            <section>
+                                Working at {resource?.employeeLocations?.map((location) => {
+                                    return location.location.name
+                                })}
                         </section>
-                        <section>
-                            Working at unknown location
-                        </section>
-                    </>
+                        </>
                 }
 
                 {
-                    <button className="btn--fireEmployee" onClick={() => {fireEmployee(resource.id)}}>Fire</button>
+                    <button className="btn--fireEmployee" onClick={() => { fireEmployee(resource.id) }}>Fire</button>
                 }
 
             </section>
@@ -89,3 +93,20 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
         </article>
     )
 }
+
+
+
+
+
+
+
+
+// {locations.map(
+//     (location) => {
+//         if (location.id === location?.employeeLocations?.locationId) {
+//             return location.name
+//         } else {
+//             return ""
+//         }
+//     }
+// )}
