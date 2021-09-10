@@ -5,7 +5,7 @@ import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
-import LocationRepository from "../../repositories/LocationRepository";
+
 
 
 export default ({ employee, updateEmployees }) => { // object deconstruction, employee is a child of employee list, so I can pass props down from employee list to employee
@@ -15,15 +15,7 @@ export default ({ employee, updateEmployees }) => { // object deconstruction, em
     const { employeeId } = useParams()
     const { getCurrentUser } = useSimpleAuth()
     const { resolveResource, resource } = useResourceResolver()
-    const [locations, setLocations] = useState([])
-   
-
-    useEffect(() => {
-        LocationRepository.getAll()
-            .then((data) => {
-                setLocations(data)
-            })
-    }, [])
+  
 
 
 
